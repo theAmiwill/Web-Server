@@ -1,0 +1,22 @@
+CompileFlags:
+  Add:
+    - -Wall
+    - -Wextra
+    - -g
+    - -I.
+    - -I/usr/include
+    - -I/usr/local/include
+
+---
+If:
+  PathMatch: .*\.c$
+CompileFlags:
+  Add:
+    - -std=c11
+
+---
+If:
+  PathMatch: .*\.(cpp|cxx|cc|c\+\+)$
+CompileFlags:
+  Add:
+    - -std=c++17

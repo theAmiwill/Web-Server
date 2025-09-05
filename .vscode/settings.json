@@ -1,0 +1,17 @@
+{
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.autocomplete": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
+    "clangd.arguments": [
+        "--background-index",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--log=verbose"
+    ],
+    "clangd.checkUpdates": false,
+    "files.associations": {
+        "*.c": "c",
+        "*.h": "c"
+    }
+}
