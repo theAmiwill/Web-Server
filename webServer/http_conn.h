@@ -2,6 +2,7 @@
 #define HTTPCONNECTION_H
 
 #include "locker.h"
+#include "lst_timer.h"
 #include <arpa/inet.h>
 #include <csignal>
 #include <errno.h>
@@ -26,6 +27,8 @@ public:
   static const int READ_SIZE = 2048;
   static const int WRITE_SIZE = 2048;
   static const int FILENAME_LEN = 200; // 文件名的最大长度
+  int m_sockfd;
+  util_timer *timer; // <--- 添加这一行，指向关联的定时器
 
   // HTTP请求方法，这里只支持GET
   enum METHOD { GET = 0, POST, HEAD, PUT, DELETE, TRACE, OPTIONS, CONNECT };
@@ -95,7 +98,6 @@ public:
   LINE_STATUS parse_line(); // 解析一行
 
 private:
-  int m_sockfd;
   sockaddr_in m_address;
   char m_read_buf[READ_SIZE];
   int m_read_idx; // 读缓冲区中已经读入的客户端数据的最后一个字节的下一个位置
@@ -127,6 +129,7 @@ private:
   // 我们将采用writev来执行写操作，所以定义下面两个成员，其中m_iv_count表示被写内存块的数量。
   struct iovec m_iv[2];
   int m_iv_count;
+
 };
 
 #endif

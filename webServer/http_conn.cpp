@@ -91,6 +91,7 @@ void http_conn::init() {
   m_version = nullptr; // 协议版本，目前支持HTTP1.1
   m_method = GET;      // 请求方法
   m_linger = false;    // http请求是否保持连接
+  timer = NULL;        // 初始化定时器指针
 
   bzero(m_read_buf, READ_SIZE);
 }
