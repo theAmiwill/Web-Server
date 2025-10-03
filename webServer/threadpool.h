@@ -102,3 +102,18 @@ template <typename T> void threadpool<T>::run() {
 }
 
 #endif
+
+/*
+一个请求到来，主线程调用 append。
+主线程先拿到互斥锁钥匙 (lock)。
+然后把请求放入队列 m_workqueue。
+然后归还互斥锁钥匙 (unlock)。
+最后按响信号量铃铛 (post)，将订单计数加1，并可能唤醒一个正在睡觉的厨师。
+一个空闲的厨师线程之前正因 wait() 而在信号量上睡觉。
+铃铛响了，厨师被唤醒，wait() 函数返回。
+厨师醒来后，尝试去拿互斥锁钥匙 (lock)。
+拿到钥匙后，从 m_workqueue 中取出请求。
+归还钥匙 (unlock)。
+开始执行 request->process()，处理请求。处理完后，回到 while 循环的开头，继续在
+wait() 处睡觉，等待下一个铃铛。
+*/
